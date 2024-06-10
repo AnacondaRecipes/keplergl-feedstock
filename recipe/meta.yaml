@@ -26,7 +26,8 @@ requirements:
     - geopandas
   run:
     - python >=3.6
-    - ipywidgets >=7.6.3
+    # build fails with most recent version
+    - ipywidgets ==7.8.1
     - traittypes >=0.2.1
     - pandas >=1.3.1
     - geopandas >=0.9.0
@@ -34,8 +35,12 @@ requirements:
 
 
 test:
+  requires:
+    - pip
   imports:
     - keplergl
+  commands:
+    - pip check
 
 about:
   home: https://github.com/keplergl/kepler.gl
@@ -47,6 +52,7 @@ about:
     This is a simple jupyter widget for kepler.gl, an advanced geospatial
     visualization tool, to render large-scale interactive maps.
   doc_url: https://docs.kepler.gl/docs/keplergl-jupyter
+  dev_url: https://github.com/keplergl/kepler.gl/tree/master/bindings/kepler.gl-jupyter
 
 extra:
   recipe-maintainers:
