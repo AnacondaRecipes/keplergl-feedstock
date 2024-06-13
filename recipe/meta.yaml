@@ -10,32 +10,36 @@ source:
   sha256: 1762c4212f177843884ad51f74e06ee3efe58ea3711d0327b6aa99ccbed52815
 
 build:
-  noarch: python
   number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vv
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<37 or s390x]
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - setuptools
     - pip
-    - jupyter
-    - jupyter-packaging
-    - pandas
-    - geopandas
+    - jupyter-packaging >=0.7.0,<0.8.0
+    - wheel
   run:
-    - python >=3.6
-    - ipywidgets >=7.6.3
+    - python
+    - ipywidgets >=7.0.0,<8
     - traittypes >=0.2.1
-    - pandas >=1.3.1
-    - geopandas >=0.9.0
-    - shapely >=1.7.1
-
+    - pandas >=0.23.0
+    - geopandas >=0.5.0
+    - shapely >=1.6.4.post2
+    
+  run_constrained:
+    - jupyterlab >=3.0.0
 
 test:
+  requires:
+    - pip
   imports:
     - keplergl
+  commands:
+    - pip check
 
 about:
   home: https://github.com/keplergl/kepler.gl
@@ -47,6 +51,7 @@ about:
     This is a simple jupyter widget for kepler.gl, an advanced geospatial
     visualization tool, to render large-scale interactive maps.
   doc_url: https://docs.kepler.gl/docs/keplergl-jupyter
+  dev_url: https://github.com/keplergl/kepler.gl/tree/master/bindings/kepler.gl-jupyter
 
 extra:
   recipe-maintainers:
